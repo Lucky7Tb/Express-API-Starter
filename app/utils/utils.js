@@ -1,9 +1,15 @@
 const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
 
-async function hashPassword(password, saltRound = 10) {
-	return await bcrypt.hash(password, saltRound);
+function hashPassword(password, saltRound = 10) {
+	return bcrypt.hash(password, saltRound);
+}
+
+function generateToken(data, secretToken, option = {}) {
+	return jwt.sign(data, secretToken, option);
 }
 
 module.exports = {
 	hashPassword,
+	generateToken
 };

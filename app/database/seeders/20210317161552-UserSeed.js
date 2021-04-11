@@ -9,6 +9,7 @@ module.exports = {
 				username: 'Lucky7Tb',
 				password: await utils.hashPassword('12345678'),
 				email: 'lucky@mail.com',
+				token: null,
 				created_at: new Date(),
 				updated_at: new Date(),
 			},
