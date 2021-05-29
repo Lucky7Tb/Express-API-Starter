@@ -1,8 +1,6 @@
 require('dotenv').config();
 const model = require('../models');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { generateToken } = require('../utils/utils');
+const { generateToken, verifyPassword } = require('../helpers');
 const operation = model.Sequelize.Op;
 
 async function login(req, res) {
@@ -21,7 +19,7 @@ async function login(req, res) {
 			});
 		}
 
-		const isMatch = await bcrypt.compare(password, user.password);
+		const isMatch = verifyPassword(password, user.password);
 
 		if (isMatch) {
 			const dataUser = {
@@ -32,36 +30,16 @@ async function login(req, res) {
 
 			const accessToken = generateToken(
 				dataUser,
-				process.env.AUTH_TOKEN,
-				{
-					expiresIn: "2m", //2 minutes
-				}
+				process.env.AUTH_TOKEN
 			);
 
-			const refreshToken = generateToken(
-				dataUser,
-				process.env.AUTH_REFRESH_TOKEN
-			);
-
-			await model["User"].update(
-				{ token: refreshToken },
-				{
-					where: {
-						id: dataUser.id,
-					},
-				}
-			);
-			
 			return res.status(200).json({
 				code: 200,
 				data: {
 					username: dataUser.username,
 					email: dataUser.email,
 				},
-				token: {
-					accessToken: accessToken,
-					refreshToken: refreshToken,
-				},
+				token: accessToken,
 				message: 'Berhasil login',
 			});
 		}
@@ -78,42 +56,6 @@ async function login(req, res) {
 	}
 }
 
-async function refreshToken(req, res) {
-	const refreshToken = req.body.refreshToken;
-
-	const user = await model.User.findOne({
-		where: { token: refreshToken },
-		attributes: ["id"],
-	});
-
-	if (!user) {
-		return res.status(401).json({
-			code: 401,
-			message: 'Akun tidak ditemukan',
-		});
-	}
-
-	jwt.verify(refreshToken, process.env.AUTH_REFRESH_TOKEN, (err, user) => {
-		if(err){
-			return res.status(403).json({
-				code: 403,
-				message: "Forbidden",
-			});
-		}
-
-		const accessToken = jwt.sign(user, process.env.AUTH_TOKEN, {
-			expiresIn: "2m", //2 minutes
-		});
-
-		return res.status(200).json({
-			code: 200,
-			accessToken,
-		});
-	})
-
-}
-
 module.exports = {
-	login,
-	refreshToken
+	login
 };

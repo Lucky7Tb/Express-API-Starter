@@ -5,10 +5,10 @@ const app = express();
 
 const api = require('./app/routes/api');
 
-app.use(logger("combined"));
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', api);
 
