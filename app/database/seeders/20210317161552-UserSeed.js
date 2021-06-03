@@ -1,13 +1,13 @@
 'use strict';
 
-const utils = require('../../utils/utils');
+const helpers = require("@helpers");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
 		await queryInterface.bulkInsert("users", [
 			{
 				username: 'Lucky7Tb',
-				password: await utils.hashPassword('12345678'),
+				password: await helpers.hashPassword('12345678'),
 				email: 'lucky@mail.com',
 				token: null,
 				created_at: new Date(),

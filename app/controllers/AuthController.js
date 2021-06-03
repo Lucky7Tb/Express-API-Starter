@@ -1,6 +1,6 @@
 require('dotenv').config();
-const model = require('../models');
-const { generateToken, verifyPassword } = require('../helpers');
+const model = require('@models');
+const { generateToken, verifyPassword } = require('@helpers');
 const operation = model.Sequelize.Op;
 
 const AuthController = {

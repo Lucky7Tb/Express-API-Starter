@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"baseUrl": "./app",
+		"paths": {
+			"@controllers": ["./controllers"],
+			"@models": ["./models"],
+			"@helpers": ["./helpers"],
+			"@middlewares": ["./middlewares"],
+			"@public": ["../public"]
+		},
+	},
+}
