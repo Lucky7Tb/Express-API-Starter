@@ -7,7 +7,6 @@
 const app = require('../app');
 const debug = require('debug')('expressapistarter:server');
 const http = require('http');
-const db = require('../app/models').sequelize;
 
 require('dotenv').config();
 
@@ -91,10 +90,3 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
-
-/**
- * Check database connection
- */
-db.authenticate()
-	.then(() => console.log("Database connected"))
-	.catch((err) => console.error(`Error: ${err}`));

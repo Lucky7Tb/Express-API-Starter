@@ -1,22 +1,9 @@
-const {
-  Model
-} = require('sequelize');
+const Model = require('./Model');
 
-module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    static associate(models) {
-    }
-  };
-  User.init({
-    username: DataTypes.STRING,
-    password: DataTypes.STRING,
-		email: DataTypes.STRING,
-		token: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'User',
-		underscored: true,
-  });
+class User extends Model {
+	static get tableName() {
+    return 'users';
+  }
+}
 
-  return User;
-};
+module.exports = User;

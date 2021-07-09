@@ -1,7 +1,7 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
 
-import { MyController, AuthController } from '../controllers';
+const { MyController, AuthController } = require('../controllers');
 
 router.get('/', MyController.index);
 

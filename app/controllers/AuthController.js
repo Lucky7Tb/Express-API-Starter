@@ -1,50 +1,46 @@
 require('dotenv').config();
-const model = require('@models');
-const { generateToken, verifyPassword } = require('@helpers');
-const operation = model.Sequelize.Op;
+const User = require('../models/User');
+const helper = require('../helpers');
 
 const AuthController = {
-	login: async (req, res) => {
+	async login (req, res) {
 		try {
 			const { email, password } = req.body;
 
-			const user = await model.User.findOne({
-				where: { email: email },
-				attributes: ['id', 'username', 'email', 'password'],
-			});
+			const [ user ] = await User.query()
+				.select('id', 'email', 'password')
+				.where('email', email);
 
 			if (!user) {
-				return res.status(401).json({
-					code: 401,
+				return res.status(404).json({
+					code: 404,
 					message: 'Akun tidak ditemukan',
 				});
 			}
 
-			const isMatch = verifyPassword(password, user.password);
+			const isMatch = await helper.verifyPassword(password, user.password);
 
-			if (isMatch) {
-				const dataUser = {
-					id: user.id,
-					username: user.username,
-					email: user.email,
-				};
-
-				const accessToken = generateToken(dataUser, process.env.AUTH_TOKEN);
-
-				return res.status(200).json({
-					code: 200,
-					data: {
-						username: dataUser.username,
-						email: dataUser.email,
-					},
-					token: accessToken,
-					message: 'Berhasil login',
+			if (!isMatch) {
+				return res.status(401).json({
+					code: 401,
+					message: 'Email atau password salah',
 				});
 			}
 
-			return res.status(401).json({
-				code: 401,
-				message: 'Email atau password salah',
+			const dataUser = {
+				id: user.id,
+				email: user.email,
+			};
+
+			const accessToken = helper.generateToken(dataUser, process.env.AUTH_TOKEN);
+
+			return res.status(200).json({
+				code: 200,
+				data: {
+					email: dataUser.email,
+				},
+				token: accessToken,
+				message: 'Berhasil login',
 			});
 		} catch (err) {
 			return res.status(500).json({

@@ -6,7 +6,7 @@ const helpers = {
 		return bcrypt.hash(password, saltRound);
 	},
 
-	verifyPassword: (password, hashPassword) => {
+	verifyPassword: async (password, hashPassword) => {
 		const isMatch = await bcrypt.compare(password, hashPassword);
 		return isMatch;
 	},

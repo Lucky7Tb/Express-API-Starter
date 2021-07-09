@@ -1,7 +1,9 @@
+const User = require('../models/User');
+
 const MyController = {
-	index: async (req, res, next) => {
-		res.send("Hello world");
+	async index (req, res, next) {
+		res.send(await User.query());
 	}
 }
 
-module.exports =  MyController;
+module.exports = MyController;
