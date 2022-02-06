@@ -1,4 +1,4 @@
-const helper = require('../../helpers');
+const { Hash } = require('../../helpers');
 
 exports.seed = (knex) => {
   // Deletes ALL existing entries
@@ -9,7 +9,7 @@ exports.seed = (knex) => {
         {
 					name: 'Lucky Tri Bhakti',
 					email: 'lucky@mail.com',
-					password: await helper.hashPassword('123456789'),
+					password: await Hash.hashPassword('123456789'),
 					created_at: new Date(),
 					updated_at: new Date(),
 				},
