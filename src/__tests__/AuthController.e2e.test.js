@@ -19,14 +19,12 @@ describe("Test Auth Endpoint", function () {
 					password_confirm: "password123",
 				})
 				.expect(201)
-				.expect("Content-Type", "application/json; charset=utf-8")
+				.expect("Content-Type", "application/json; charset=utf-8");
 
 			expect(response.body.statusCode).toBe(201);
 			expect(response.body.message).toBe("Success register");
 		});
-	});
 
-	describe("POST /api/auth/register", function () {
 		it("Should failed register the user because email is already exist", async function () {
 			const response = await http
 				.post("/api/auth/register")
@@ -37,14 +35,12 @@ describe("Test Auth Endpoint", function () {
 					password_confirm: "password123",
 				})
 				.expect(400)
-				.expect("Content-Type", "application/json; charset=utf-8")
+				.expect("Content-Type", "application/json; charset=utf-8");
 
 			expect(response.body.statusCode).toBe(400);
 			expect(response.body.message).toBe("Email already in use");
 		});
-	});
 
-	describe("POST /api/auth/register", function () {
 		it("Should failed register the user because 'password_confirm' is not same with password", async function () {
 			const response = await http
 				.post("/api/auth/register")
@@ -55,7 +51,7 @@ describe("Test Auth Endpoint", function () {
 					password_confirm: "password1234",
 				})
 				.expect(400)
-				.expect("Content-Type", "application/json; charset=utf-8")
+				.expect("Content-Type", "application/json; charset=utf-8");
 
 			expect(response.body.statusCode).toBe(400);
 			expect(response.body.message).toBe("Password not match");
@@ -71,16 +67,14 @@ describe("Test Auth Endpoint", function () {
 					password: "password123",
 				})
 				.expect(200)
-				.expect("Content-Type", "application/json; charset=utf-8")
+				.expect("Content-Type", "application/json; charset=utf-8");
 
 			expect(response.body.statusCode).toBe(200);
 			expect(response.body.message).toBe("Success login");
-			expect(response.body.data).not.toBeNull()
-			expect(response.body.data.token).not.toBeNull()
+			expect(response.body.data).not.toBeNull();
+			expect(response.body.data.token).not.toBeNull();
 		});
-	});
 
-	describe("POST /api/auth/login", function () {
 		it("Should failed login the user because email is wrong", async function () {
 			const response = await http
 				.post("/api/auth/login")
@@ -89,14 +83,12 @@ describe("Test Auth Endpoint", function () {
 					password: "password123",
 				})
 				.expect(404)
-				.expect("Content-Type", "application/json; charset=utf-8")
+				.expect("Content-Type", "application/json; charset=utf-8");
 
 			expect(response.body.statusCode).toBe(404);
 			expect(response.body.message).toBe("Account not found");
 		});
-	});
 
-	describe("POST /api/auth/login", function () {
 		it("Should failed login the user because password is wrong", async function () {
 			const response = await http
 				.post("/api/auth/login")
