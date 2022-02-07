@@ -1,30 +1,55 @@
 {
-  "name": "expressapistarter",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www",
-    "migration": "knex migrate:latest && knex seed:run"
-  },
-  "dependencies": {
-    "bcrypt": "^5.0.1",
-    "compression": "^1.7.4",
-    "cors": "^2.8.5",
-    "debug": "~2.6.9",
-    "dotenv": "^8.2.0",
-    "express": "^4.16.4",
-    "express-validator": "^6.12.0",
-    "helmet": "^4.6.0",
-    "jsonwebtoken": "^8.5.1",
-    "knex": "^0.95.6",
-    "morgan": "~1.9.1",
-    "mysql2": "^2.2.5",
-    "objection": "^2.2.15",
-    "passport": "^0.4.1",
-    "passport-jwt": "^4.0.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.7"
-  }
+	"name": "expressapistarter",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"start": "node ./bin/www",
+		"dev": "nodemon ./bin/www",
+		"migration": "knex migrate:latest && knex seed:run",
+		"test": "cross-env NODE_ENV=development jest",
+		"test:e2e": "cross-env NODE_ENV=development jest  --testTimeout=10000 --detectOpenHandles --config ./src/__tests__/jest.e2e.json"
+	},
+	"dependencies": {
+		"bcrypt": "^5.0.1",
+		"compression": "^1.7.4",
+		"cors": "^2.8.5",
+		"cross-env": "^7.0.3",
+		"debug": "~2.6.9",
+		"dotenv": "^8.6.0",
+		"express": "^4.17.2",
+		"helmet": "^4.6.0",
+		"joi": "^17.6.0",
+		"jsonwebtoken": "^8.5.1",
+		"knex": "^0.95.15",
+		"morgan": "~1.9.1",
+		"mysql2": "^2.3.3",
+		"objection": "^2.2.18"
+	},
+	"devDependencies": {
+		"jest": "^27.5.0",
+		"nodemon": "^2.0.15",
+		"supertest": "^6.2.2"
+	},
+	"main": "app.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Lucky7Tb/Express-API-Starter.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Lucky7Tb/Express-API-Starter/issues"
+	},
+	"homepage": "https://github.com/Lucky7Tb/Express-API-Starter#readme",
+	"description": "And starter code for express application",
+	"jest": {
+		"testEnvironment": "node",
+		"coveragePathIgnorePatterns": [
+			"/node_modules/"
+		],
+		"setupFiles": [
+			"dotenv/config"
+		]
+	}
 }
